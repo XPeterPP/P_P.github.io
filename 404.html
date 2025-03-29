@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Shortener</title>
+    <script>
+        async function handleRedirect() {
+            const shortCode = window.location.pathname.slice(1);
+            const apiUrl = 'https://script.google.com/macros/s/AKfycbwtHzdx2xBkxzJQM4KVFJu6xz_R2W9-T6mM0osJVd5KtlcK-4R58wkA5W26uAYiRRfxNQ/exec?code=' + shortCode;
+
+            try {
+                const response = await fetch(apiUrl);
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    window.location.href = result.message;
+                } else {
+                    document.body.innerHTML = 'URL Not Found';
+                }
+            } catch (error) {
+                document.body.innerHTML = 'Redirect Error';
+            }
+        }
+
+        window.onload = handleRedirect;
+    </script>
+</head>
+<body>
+    Redirecting...
+</body>
+</html>
